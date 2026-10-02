@@ -1,5 +1,69 @@
+<html lang=en>
+<head>
+<title>LR</title>
+<style>
+.device {
+  margin:auto; 
+  width: 640px;
+  height: 960px;
+  overflow: hidden;
+  background-color: rgb(136, 215, 26);
+  position: relative;
+}
+ul li {
+  cursor: pointer;
+}
 
+ul li.done {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
 
+</style>
+</head>
+<body>
+<div class="device">
+
+<div id="myDIV" class="header">
+  <h2>To Do Checklist</h2>
+  <input type="text" id="myInput" placeholder="Anything To-Do?">
+  <span onclick="newElement()" class="addBtn">Add</span> 
+</div>
+
+<ul id="myUL">
+  <li class="done">Finish Tab 1</li>
+  <li class="done">Finish Tab 2</li>
+  <li class="done">Finish Tab 3</li>
+  <li class="done">Finish Tab 4</li>
+  <li class="done">Finish Tab 5</li>
+  <li class="done">Finish Tab 6</li>
+  <li>Compile Tabs</li>
+  <li>Submit The Assignment</li>
+</ul>
+<script>
+
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('done');
+  }
+}, false);
+
+function newElement() {
+  var li = document.createElement("LI");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  document.getElementById("myUL").appendChild(li);
+  document.getElementById("myInput").value = "";
+
+ 
+}
+
+</script>
+</body>
+</html>
 
 
 /* NAVIGATION */
