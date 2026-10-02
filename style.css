@@ -44,7 +44,7 @@ body {
   position: fixed;   
   bottom: 0;       
   left: 0;      
-  width: 100%;    
+  width: 640px;    
   height: 110px;
   background-color: #9ba7f8;
   z-index: 1000; 
