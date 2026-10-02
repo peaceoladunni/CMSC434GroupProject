@@ -4,21 +4,37 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Project 3</title>
     <link rel="stylesheet" href="style.css" type="text/css">
-    <title>Choices Screen</title>
+    <title>Choices</title>
 
+    <div id="outside">
     <h1>-Choices Screen-</h1>
     <form>
         <label>Camera Type #1:</label> <br>
-        <input type="radio" checked>dSLR <br>
-        <input type="radio" >Mirroless <br> <br>
+        <input type="radio" name="cameraType1" value="dSLR" checked>dSLR <br>
+        <input type="radio" name="cameraType1" value="Mirrorless">Mirrorless <br> <br>
 
         <label>Camera Type #2:</label> <br>
         <select name="cameraType2" id="cameraType2">
-			<option value="Long Term" selected="selected">dSLR</option>
-		</select>
+			<option value="dSLR" selected="selected">dSLR</option>
+			<option value="Mirrorless">Mirrorless</option>
+		</select> <br> <br>
+
+        <button type="button" onclick="showChoices()">Submit</button>
     </form>
+    <div style="text-align: center; margin-top: 30px;">
+        <div id="choicesOutput" style="display: inline-flex; align-items: center; justify-content: center; width: 126px; min-height: 70px; box-sizing: border-box; background-color: lightgrey; border: 1px solid black; padding: 8px;"></div>
+    </div>
+
+    <script>
+        function showChoices() {
+            var type1 = document.querySelector('input[name="cameraType1"]:checked').value;
+            var type2 = document.getElementById('cameraType2').value;
+            document.getElementById('choicesOutput').textContent =
+                'You chose ' + type1 + ' and ' + type2 + '!';
+        }
+    </script>
+</div>
 
 </head>
 
