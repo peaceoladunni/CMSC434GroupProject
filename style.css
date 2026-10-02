@@ -1,5 +1,6 @@
 #outside{
-    width:640px ;
+  overflow:hidden;  
+  width:640px ;
     height: 960px;
     background-color: rgb(248, 201, 209);
 }
