@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <title>Tab 3</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+    
+    
+
+</head>
+<body>
+    <div id="outside">
+        <h1>-Color Example-</h1>
+    <div id="fline">
+        <p id="p1"><strong>Hello There</strong></p>
+    </div>
+    <div id="sline">
+        <p id="p2"><strong>Hi Again</strong></p>
+    </div>
+    <!--from HTML example--> 
+    <canvas id="myPieChart" width="675" height="675" style="display: block; box-sizing: border-box; height: 600px; width: 600px;"></canvas>
+     <script src="chart.js"></script>
+    <script src="chartjs-plugin-datalabels.js"></script>
+    <script>
+        
+     const myContext = document.getElementById('myPieChart').getContext('2d');
+   
+     const myData = {
+        labels: ['Roses  ', 'Violets  ', 'Tulips  '],
+        datasets: [{
+           label: 'Flowers',
+           data: [300, 500, 100],
+           backgroundColor: ['#F33A6A', '#EE82EE', '#FFD662']
+        }]
+     };
+  
+     const chartConfig = {
+        type: 'pie',
+        data: myData,
+        plugins: [ChartDataLabels],
+        options: {
+           events: [],
+           layout: {
+              padding: {
+                 top: 30
+              }
+           },
+           plugins: { 
+              legend: { 
+                 labels: { 
+                    font: { family: 'Consolas', size: 20 },
+                    padding: 5
+                 },
+                 position: 'bottom', 
+                 align: 'start',
+              },
+ 
+              datalabels: {
+                 color: '#000000',
+                 anchor: 'end', 
+                 align: 'end', 
+                 offset: 5,   
+                 font: {
+                   weight: 'bold',
+                   size: 16
+                 },
+                 formatter: (value) => { return value; }
+              }
+           }
+        }
+     };
+
+     myChart = new Chart(myContext, chartConfig);
+   
+    </script>
+    </div>
+</body>

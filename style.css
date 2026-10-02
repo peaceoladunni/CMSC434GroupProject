@@ -1,0 +1,30 @@
+#outside{
+    width:640px ;
+    height: 960px;
+    background-color: rgb(248, 201, 209);
+}
+#fline{
+    background-color: black;
+    text-align: center;  
+}
+#sline{
+     background-color: yellow;
+    text-align: center;
+}
+#p1{
+    color: yellow;
+    align-self: center;
+    font-size: 29px;
+    margin: 0;
+    
+}
+h1{
+   margin-left: -1rem;
+    padding: 1rem;
+}
+#p2{
+    color: purple;
+    align-self: center;
+    font-size: 29px;
+    margin: 0;
+}
