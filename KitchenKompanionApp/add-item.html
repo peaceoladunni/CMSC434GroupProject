@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kitchen Kompanion – Add Item</title>
+    <link rel="stylesheet" href="add-item.css" type="text/css">
+</head>
+
+<body>
+<div id="app" class="form-page">
+    <header class="page-head">
+        <a href="list.html" class="back" aria-label="Back to list"><i data-lucide="chevron-left"></i></a>
+        <h1>Add Item</h1>
+    </header>
+
+    <form class="form">
+        <label class="label" for="name">Item Name</label>
+        <input id="name" class="input" autocomplete="off" placeholder="e.g. Milk">
+
+        <fieldset class="locations">
+            <legend class="label">Where is it stored?</legend>
+            <div class="location-options">
+                <label>
+                    <input type="radio" name="location" value="Refrigerator" class="sr-only" checked>
+                    <span class="loc-card"><i data-lucide="refrigerator"></i>Refrigerator</span>
+                </label>
+                <label>
+                    <input type="radio" name="location" value="Freezer" class="sr-only">
+                    <span class="loc-card"><i data-lucide="snowflake"></i>Freezer</span>
+                </label>
+                <label>
+                    <input type="radio" name="location" value="Pantry" class="sr-only">
+                    <span class="loc-card"><i data-lucide="package"></i>Pantry</span>
+                </label>
+            </div>
+        </fieldset>
+
+        <label class="label" for="qty">Quantity</label>
+        <div class="field-pair">
+            <input id="qty" class="input" type="number" min="1" value="1">
+            <div class="select-wrap">
+                <select id="unit" class="input" aria-label="Unit">
+                    <option>Count</option>
+                    <option>Gallon</option>
+                    <option>Quart</option>
+                    <option>Cup</option>
+                    <option>lb</option>
+                    <option>oz</option>
+                    <option>Dozen</option>
+                    <option>Bag</option>
+                    <option>Box</option>
+                    <option>Can</option>
+                    <option>Bottle</option>
+                </select>
+                <i data-lucide="chevron-down"></i>
+            </div>
+        </div>
+
+        <label class="label" for="exp">Expiration Date</label>
+        <input id="exp" class="input" type="date">
+
+        <label class="label" for="owner">Who is this for?</label>
+        <div class="select-wrap">
+            <select id="owner" class="input">
+                <option>Everyone</option>
+                <option>Alex</option>
+                <option>Jordan</option>
+                <option>Sam</option>
+            </select>
+            <i data-lucide="chevron-down"></i>
+        </div>
+
+        <label class="label notes-label" for="notes"><i data-lucide="file-text"></i>Notes (optional)</label>
+        <input id="notes" class="input" placeholder="e.g. brand, special notes...">
+    </form>
+
+    <div class="form-actions">
+        <a href="list.html" class="btn">Cancel</a>
+        <a href="list.html" class="btn primary">Add Item</a>
+    </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+</body>
+</html>
