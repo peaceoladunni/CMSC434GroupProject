@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kitchen Kompanion | Recipes</title>
+
+    <link rel="stylesheet" href="recipes.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Kitchen <br>Kompanion</h1>
+        <h2>Recipes</h2>
+        <p>What are we cooking today?</p>
+    </header>
+
+    <main>
+
+        <div id="recipes-home">
+
+            <section class="search-section">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search recipes..."
+                >
+            </section>
+
+            <section class="filters">
+                <button type="button">All</button>
+                <button type="button">Quick</button>
+                <button type="button">Favorites</button>
+            </section>
+
+            <section class="recipes-section">
+                <h2>Recommended Recipes</h2>
+
+                <div id="recipe-list">
+
+                    <div class="recipe-card" onclick="openRecipe(1)">
+
+                        <div class="recipe-image-container">
+                            <img src="./images/avocado.jpg" alt="Avocado Toast">
+                            <button class="favorite-btn" type="button">♡</button>
+                        </div>
+
+                        <div class="recipe-info">
+                            <h3>Avocado Toast</h3>
+
+                            <div class="recipe-meta">
+                                <span>🕒 5 min</span>
+                                <span>🍴 2 ingredients</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="ingredients-section">
+                <h2>Use Your Ingredients</h2>
+                <p>Discover recipes using what you already have.</p>
+
+                <div id="ingredient-recipes">
+
+                    <div class="recipe-card" onclick="openRecipe(4)">
+
+                        <div class="recipe-image-container">
+                            <img src="./images/banana.jpg" alt="Banana Smoothie">
+                            <button class="favorite-btn" type="button">♡</button>
+                        </div>
+
+                        <div class="recipe-info">
+                            <h3>Banana Smoothie</h3>
+
+                            <div class="recipe-meta">
+                                <span>🕒 5 min</span>
+                                <span>🍴 3 ingredients</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <section id="recipe-details" hidden>
+
+            <button type="button" onclick="goBack()">
+                ← Back
+            </button>
+
+            <h2 id="recipe-title"></h2>
+
+            <img id="recipe-image" alt="Recipe">
+
+            <p id="recipe-time"></p>
+
+            <h3>Ingredients</h3>
+            <ul id="ingredients-list"></ul>
+
+            <h3>Instructions</h3>
+            <ol id="recipe-steps"></ol>
+
+        </section>
+
+    </main>
+
+    <footer class="bottom-nav">
+
+        <a href="index.html" class="nav-item">
+            <i data-lucide="house"></i>
+            <span>Kitchen</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <i data-lucide="shopping-cart"></i>
+            <span>List</span>
+        </a>
+
+        <a href="recipes.html" class="nav-item active">
+            <i data-lucide="chef-hat"></i>
+            <span>Recipes</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <i data-lucide="user-round"></i>
+            <span>Account</span>
+        </a>
+
+    </footer>
+
+    <script src="recipesData.js"></script>
+    <script src="recipes.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
