@@ -1,0 +1,205 @@
+/* Kitchen Kompanion - homepage styles (matched to the existing recipes page styles) */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fffcf3;
+  color: #08291d;
+  font-family: Arial, sans-serif;
+  padding-bottom: 100px; /* room for the fixed bottom nav */
+}
+
+.app {
+  width: 100%;
+}
+
+.content {
+  padding: 35px 24px 0;
+}
+
+/* Headings */
+h1 {
+  font-size: 36px;
+  line-height: 0.95;
+  margin: 0 0 35px;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 0 0 12px;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+/* Search */
+.search-bar {
+  width: 100%;
+  margin-bottom: 32px;
+  padding: 16px 18px;
+  background: #f2f0e4;
+  color: #08291d;
+  border: none;
+  border-radius: 16px;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Expiring Soon: horizontal list */
+.expiring-list {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+  overflow-x: auto;
+}
+
+.expiring-item {
+  flex: 0 0 auto;
+  width: 140px;
+  padding: 15px;
+  background: #24794f;
+  color: #fffcf3;
+  border: 1px solid #e5e1d5;
+  border-radius: 14px;
+}
+
+.expiring-item .name {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.expiring-item .when {
+  display: block;
+  font-size: 12px;
+  color: #fffcf3;
+  font-style: italic;
+}
+
+/* Refrigerator: vertical list (name | quantity | arrows) */
+.ingredient-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ingredient-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e1d5;
+  font-size: 16px;
+}
+
+.ingredient-item .qty {
+  text-align: center;
+  color: #535c5b;
+}
+
+.arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.arrows button {
+  padding: 4px 10px;
+  background: transparent;
+  background: #24794f;
+  color: #fffcf3;
+  border: 1px solid #deded3;
+  border-radius: 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.arrows button:hover {
+  background: #13432b;
+}
+
+.empty-message {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #636967;
+}
+
+/* Add item button (not wired up yet) */
+.add-item-btn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: #24794f;
+  color: white;
+  border: 1px solid #24794f;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Bottom navigation bar (placeholder; navigation handled by another developer) */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 13px 8px 22px;
+  background: #fffcf3;
+  border-top: 1px solid #e5e1d5;
+  z-index: 100;
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #697271;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.bottom-nav a.active {
+  color: #21764f;
+  font-weight: 600;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* On larger screens, show as a phone-width column */
+@media (min-width: 600px) {
+  body {
+    max-width: 430px;
+    min-height: 100vh;
+    margin: 0 auto;
+    border-left: 1px solid #e5e1d5;
+    border-right: 1px solid #e5e1d5;
+  }
+
+  .bottom-nav {
+    width: 100%;
+    max-width: 430px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
