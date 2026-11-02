@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kitchen Kompanion</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <div class="app">
+    <main class="content">
+      <h1>Kitchen<br>Kompanion</h1>
+
+      <h2>My Kitchen</h2>
+      <input
+        type="search"
+        id="search"
+        class="search-bar"
+        placeholder="Search ingredient..."
+        aria-label="Search ingredient"
+      >
+
+      <section>
+        <h3>Expiring Soon</h3>
+        <ul id="expiring-list" class="expiring-list"></ul>
+        <p id="expiring-empty" class="empty-message" hidden>Nothing expiring in the next 3 days.</p>
+      </section>
+
+      <section>
+        <h3>Refrigerator</h3>
+        <ul id="ingredient-list" class="ingredient-list"></ul>
+        <p id="ingredient-empty" class="empty-message" hidden>No ingredients found.</p>
+      </section>
+
+      <!-- Opens the Add Item form -->
+      <a href="add-item.html" class="add-item-btn">Add Item</a>
+    </main>
+
+    <footer class="bottom-nav">
+
+        <a href="home.html" class="nav-item active">
+            <i data-lucide="house"></i>
+            <span>Kitchen</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <i data-lucide="shopping-cart"></i>
+            <span>List</span>
+        </a>
+
+        <a href="recipes.html" class="nav-item">
+            <i data-lucide="chef-hat"></i>
+            <span>Recipes</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <i data-lucide="user-round"></i>
+            <span>Account</span>
+        </a>
+
+    </footer>
+  </div>
+
+  <script>
+
+    function daysFromToday(n) {
+      const d = new Date();
+      d.setHours(0, 0, 0, 0);
+      d.setDate(d.getDate() + n);
+      return d;
+    }
+
+
+    const ingredients = [
+      { name: "Milk",          quantity: 0.5,  unit: "gallon", expires: daysFromToday(2) },
+      { name: "Eggs",          quantity: 12,     unit: null,     expires: daysFromToday(14) },
+      { name: "Tomatoes",      quantity: 5,      unit: null,     expires: daysFromToday(3) },
+      { name: "Spinach",       quantity: 1,      unit: "lb",    expires: daysFromToday(1) },
+      { name: "Cheddar Cheese",quantity: 8,      unit: "oz",     expires: daysFromToday(30) },
+      { name: "Chicken Breast",quantity: 1.5,    unit: "lb",     expires: daysFromToday(0) },
+      { name: "Carrots",       quantity: 6,      unit: null,     expires: daysFromToday(10) },
+      { name: "Orange Juice",  quantity: 1,      unit: "quart",  expires: daysFromToday(6) }
+    ];
+
+    const EXPIRING_WINDOW_DAYS = 3;
+
+    const searchInput = document.getElementById("search");
+    const expiringList = document.getElementById("expiring-list");
+    const expiringEmpty = document.getElementById("expiring-empty");
+    const ingredientList = document.getElementById("ingredient-list");
+    const ingredientEmpty = document.getElementById("ingredient-empty");
+
+    function formatQuantity(item) {
+    const whole = Math.floor(item.quantity);
+    const hasHalf = item.quantity % 1 === 0.5;
+    let text;
+    if (hasHalf) {
+        text = whole > 0 ? whole + " 1/2" : "1/2";
+    } else {
+        text = String(item.quantity);
+    }
+    return item.unit ? text + " " + item.unit : text;
+    }
+
+    function changeQuantity(item, delta) {
+    item.quantity = Math.max(0, item.quantity + delta); // never goes below 0
+    renderIngredients(searchInput.value);
+    }
+
+    function daysUntil(date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return Math.round((date - today) / (1000 * 60 * 60 * 24));
+    }
+
+    function expiryLabel(days) {
+      if (days <= 0) return "Expires today";
+      if (days === 1) return "Expires tomorrow";
+      return "Expires in " + days + " days";
+    }
+
+    function renderExpiring() {
+      expiringList.innerHTML = "";
+      const soon = ingredients
+        .map(function (item) { return { item: item, days: daysUntil(item.expires) }; })
+        .filter(function (entry) { return entry.days <= EXPIRING_WINDOW_DAYS; })
+        .sort(function (a, b) { return a.days - b.days; });
+
+      soon.forEach(function (entry) {
+        const li = document.createElement("li");
+        li.className = "expiring-item";
+
+        const name = document.createElement("span");
+        name.className = "name";
+        name.textContent = entry.item.name;
+
+        const when = document.createElement("span");
+        when.className = "when";
+        when.textContent = expiryLabel(entry.days);
+
+        li.appendChild(name);
+        li.appendChild(when);
+        expiringList.appendChild(li);
+      });
+
+      expiringEmpty.hidden = soon.length > 0;
+    }
+
+    function renderIngredients(query) {
+      ingredientList.innerHTML = "";
+      const q = (query || "").trim().toLowerCase();
+      const matches = ingredients.filter(function (item) {
+        return item.name.toLowerCase().includes(q);
+      });
+
+    matches.forEach(function (item) {
+    const li = document.createElement("li");
+    li.className = "ingredient-item";
+
+    const name = document.createElement("span");
+    name.textContent = item.name;
+
+    const qty = document.createElement("span");
+    qty.className = "qty";
+    qty.textContent = formatQuantity(item);
+
+    const arrows = document.createElement("div");
+    arrows.className = "arrows";
+
+    const up = document.createElement("button");
+    up.type = "button";
+    up.textContent = "▲";
+    up.setAttribute("aria-label", "Increase " + item.name);
+    up.addEventListener("click", function () { changeQuantity(item, 1); });
+
+    const down = document.createElement("button");
+    down.type = "button";
+    down.textContent = "▼";
+    down.setAttribute("aria-label", "Decrease " + item.name);
+    down.addEventListener("click", function () { changeQuantity(item, -1); });
+
+    arrows.appendChild(up);
+    arrows.appendChild(down);
+
+    li.appendChild(name);
+    li.appendChild(qty);
+    li.appendChild(arrows);
+    ingredientList.appendChild(li);
+    });
+
+      ingredientEmpty.hidden = matches.length > 0;
+    }
+
+    searchInput.addEventListener("input", function () {
+      renderIngredients(searchInput.value);
+    });
+
+    renderExpiring();
+    renderIngredients("");
+  </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
