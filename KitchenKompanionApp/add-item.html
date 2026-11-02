@@ -10,13 +10,14 @@
 <body>
 <div id="app" class="form-page">
     <header class="page-head">
-        <a href="list.html" class="back" aria-label="Back to list"><i data-lucide="chevron-left"></i></a>
+        <a href="home.html" class="back" aria-label="Back to Kitchen"><i data-lucide="chevron-left"></i></a>
         <h1>Add Item</h1>
     </header>
 
-    <form class="form">
+    <form id="addForm" class="form" novalidate>
         <label class="label" for="name">Item Name</label>
         <input id="name" class="input" autocomplete="off" placeholder="e.g. Milk">
+        <p id="nameError" class="field-error" hidden>Please enter an item name.</p>
 
         <fieldset class="locations">
             <legend class="label">Where is it stored?</legend>
@@ -40,34 +41,18 @@
         <div class="field-pair">
             <input id="qty" class="input" type="number" min="1" value="1">
             <div class="select-wrap">
-                <select id="unit" class="input" aria-label="Unit">
-                    <option>Count</option>
-                    <option>Gallon</option>
-                    <option>Quart</option>
-                    <option>Cup</option>
-                    <option>lb</option>
-                    <option>oz</option>
-                    <option>Dozen</option>
-                    <option>Bag</option>
-                    <option>Box</option>
-                    <option>Can</option>
-                    <option>Bottle</option>
-                </select>
+                <select id="unit" class="input" aria-label="Unit"></select>
                 <i data-lucide="chevron-down"></i>
             </div>
         </div>
+        <p id="qtyError" class="field-error" hidden>Quantity must be at least 1.</p>
 
         <label class="label" for="exp">Expiration Date</label>
         <input id="exp" class="input" type="date">
 
         <label class="label" for="owner">Who is this for?</label>
         <div class="select-wrap">
-            <select id="owner" class="input">
-                <option>Everyone</option>
-                <option>Alex</option>
-                <option>Jordan</option>
-                <option>Sam</option>
-            </select>
+            <select id="owner" class="input"></select>
             <i data-lucide="chevron-down"></i>
         </div>
 
@@ -76,8 +61,8 @@
     </form>
 
     <div class="form-actions">
-        <a href="list.html" class="btn">Cancel</a>
-        <a href="list.html" class="btn primary">Add Item</a>
+        <a href="home.html" class="btn">Cancel</a>
+        <button type="submit" form="addForm" class="btn primary">Add Item</button>
     </div>
 </div>
 
@@ -85,5 +70,6 @@
 <script>
     lucide.createIcons();
 </script>
+<script src="add-item.js"></script>
 </body>
 </html>

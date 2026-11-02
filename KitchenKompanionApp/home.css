@@ -138,8 +138,10 @@ section {
   color: #636967;
 }
 
-/* Add item button (not wired up yet) */
+/* Add item button (links to add-item.html) */
 .add-item-btn {
+  text-align: center;
+  text-decoration: none;
   display: block;
   width: 100%;
   margin-top: 20px;
