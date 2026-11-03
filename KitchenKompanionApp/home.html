@@ -27,7 +27,7 @@
       </section>
 
       <section>
-        <h3>Refrigerator</h3>
+        <h3>My Ingredients</h3>
         <ul id="ingredient-list" class="ingredient-list"></ul>
         <p id="ingredient-empty" class="empty-message" hidden>No ingredients found.</p>
       </section>
@@ -82,6 +82,38 @@
       { name: "Orange Juice",  quantity: 1,      unit: "quart",  expires: daysFromToday(6) }
     ];
 
+    const ITEMS_KEY = "kk-items"; // must match the key in add-item.js
+
+function loadAddedItems() {
+  try {
+    return JSON.parse(localStorage.getItem(ITEMS_KEY)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+// Convert an item saved by the Add Item form into the shape this page uses
+function toIngredient(saved) {
+  return {
+    id: saved.id,
+    name: saved.name,
+    location: saved.location,
+    quantity: saved.qty,
+    unit: saved.unit === "Count" ? null : saved.unit.toLowerCase(), // "Count" = plain number, no unit shown
+    expires: saved.exp ? new Date(saved.exp + "T00:00:00") : null,  // exp is optional
+    owner: saved.owner,
+    notes: saved.notes
+  };
+}
+
+// The built-in sample items are all refrigerator items
+ingredients.forEach(function (item) { item.location = "Refrigerator"; });
+
+// Add anything saved from the Add Item page
+loadAddedItems().forEach(function (saved) {
+  ingredients.push(toIngredient(saved));
+});
+
     const EXPIRING_WINDOW_DAYS = 3;
 
     const searchInput = document.getElementById("search");
@@ -107,6 +139,20 @@
     renderIngredients(searchInput.value);
     }
 
+    function deleteIngredient(item) {
+  const index = ingredients.indexOf(item);
+  if (index !== -1) ingredients.splice(index, 1);
+
+  // Items added from the Add Item page have an id and are stored, so remove them there too
+  if (item.id) {
+    const remaining = loadAddedItems().filter(function (s) { return s.id !== item.id; });
+    try { localStorage.setItem(ITEMS_KEY, JSON.stringify(remaining)); } catch (e) {}
+  }
+
+  renderExpiring(); // keep the Expiring Soon list in sync
+  renderIngredients(searchInput.value);
+}
+
     function daysUntil(date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -123,7 +169,7 @@
       expiringList.innerHTML = "";
       const soon = ingredients
         .map(function (item) { return { item: item, days: daysUntil(item.expires) }; })
-        .filter(function (entry) { return entry.days <= EXPIRING_WINDOW_DAYS; })
+        .filter(function (entry) { return entry.item.expires && entry.days <= EXPIRING_WINDOW_DAYS; })
         .sort(function (a, b) { return a.days - b.days; });
 
       soon.forEach(function (entry) {
@@ -157,6 +203,13 @@
     const li = document.createElement("li");
     li.className = "ingredient-item";
 
+    const remove = document.createElement("button");
+remove.type = "button";
+remove.className = "remove-btn";
+remove.textContent = "✕";
+remove.setAttribute("aria-label", "Delete " + item.name);
+remove.addEventListener("click", function () { deleteIngredient(item); });
+
     const name = document.createElement("span");
     name.textContent = item.name;
 
@@ -181,7 +234,7 @@
 
     arrows.appendChild(up);
     arrows.appendChild(down);
-
+    li.appendChild(remove);
     li.appendChild(name);
     li.appendChild(qty);
     li.appendChild(arrows);
@@ -197,6 +250,10 @@
 
     renderExpiring();
     renderIngredients("");
+
+  document.querySelector(".add-item-btn").addEventListener("click", function () {
+  window.location.href = "add-item.html";
+});
   </script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
