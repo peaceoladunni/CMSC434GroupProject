@@ -1,45 +1,110 @@
-* {
-    box-sizing: border-box;
+:root {
+  --line: #e5e1d5;
+  --surface: #fffcf3;
+  --muted: #697271;
 }
 
-
+* {
+  box-sizing: border-box;
+}
 
 body {
-    margin: 0;
-    background: #fffcf3;
-    color: #08291d;
-    font-family: Arial, sans-serif;
-    padding-bottom: 100px;
+  margin: 0;
+  background: #e5e1d5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #08291d;
+  font-family: Arial, sans-serif;
+  padding-bottom: 100px;
 }
 
-header {
-    padding: 35px 24px 10px;
+/* Device frame (same size as the Kitchen page) */
+.app {
+  width: 640px;
+  height: 960px;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fffcf3;
+  border: 1px solid #e5e1d5;
 }
 
-header h1 {
-    font-size: 36px;
-    line-height: 0.95;
-    margin: 0 0 35px;
-    font-weight: 800;
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 35px 24px 100px;
 }
 
-header h2 {
-    font-size: 24px;
-    margin: 0 0 5px;
-    font-weight: 800;
-    color: #08291d;
+/* Headings */
+h1 {
+  font-size: 36px;
+  line-height: 0.95;
+  margin: 0 0 35px;
+  font-weight: 800;
 }
 
-main {
-    padding: 0 24px;
+h2 {
+  font-size: 24px;
+  margin: 0 0 12px;
+  font-weight: 800;
 }
-
 
 ul {
-    list-style: none;
-    margin:0;padding:0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+/* Shopping list: vertical list (x | name | quantity) */
+.shopping-list {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.shopping-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e1d5;
+  font-size: 16px;
+}
+
+.shopping-item .name {
+  padding-right: 8px;
+  word-break: break-word;
+}
+
+.shopping-item .qty {
+  text-align: right;
+  color: #535c5b;
+}
+
+.remove-btn {
+  margin-right: 12px;
+  padding: 2px 8px;
+  background: transparent;
+  color: #697271;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  color: #08291d;
+}
+
+.empty-message {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #636967;
+}
+
+/* Buttons */
 .add-item-btn {
   text-align: center;
   text-decoration: none;
@@ -57,90 +122,71 @@ ul {
 }
 
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 18px;
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    background: var(--surface);
-    color: var(--muted);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-
-
-
-.shopping-list {
-  padding: 0;
-  list-style: none;
-  margin-bottom: 8px;
-}
-
-.shopping-item {
-  display: grid;
-  grid-template-columns: auto 1fr 1fr auto;
+  display: inline-flex;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e5e1d5;
-  font-size: 16px;
-}
-
-.shopping-item .name {
-  padding-right:8px;
-  word-break:break-word;
-}
-
-.remove-btn {
-  margin-right: 12px;
-  padding: 2px 8px;
-  background: transparent;
-  color: #697271;
-  border:none;
-  font-size: 16px;
+  justify-content: center;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.remove-btn:hover {
-  color: #08291d
+/* Add-item popup */
+dialog {
+  width: 90%;
+  max-width: 420px;
+  padding: 0;
+  background: #fffcf3;
+  color: #08291d;
+  border: 1px solid #e5e1d5;
+  border-radius: 16px;
 }
 
-.shopping-item .qty {
-  text-align: center;
-  color: #535c5b;
+dialog::backdrop {
+  background: rgba(8, 41, 29, 0.4);
 }
 
-.arrows {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.popup-content {
+  padding: 24px;
 }
 
-.arrows button {
-  padding: 4px 10px;
-  background: transparent;
-  background: #24794f;
-  color: #fffcf3;
-  border: 1px solid #deded3;
-  border-radius: 10px;
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.arrows button:hover {
-  background: #13432b;
-}
-
-.empty-message {
-  margin: 8px 0;
+.popup-content p {
+  margin: 0 0 16px;
   font-size: 14px;
   color: #636967;
 }
 
+.popup-content input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 16px 18px;
+  background: #f2f0e4;
+  color: #08291d;
+  border: none;
+  border-radius: 16px;
+  outline: none;
+  font-size: 15px;
+}
+
+.form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-actions .add-item-btn {
+  margin-top: 0;
+}
+
+/* Bottom navigation bar */
 .bottom-nav {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -169,31 +215,4 @@ ul {
 
 [hidden] {
   display: none !important;
-}
-
-/* On larger screens, show as a phone-width column */
-@media (min-width: 600px) {
-  body {
-    max-width: 430px;
-    min-height: 100vh;
-    margin: 0 auto;
-    border-left: 1px solid #e5e1d5;
-    border-right: 1px solid #e5e1d5;
-  }
-
-  .bottom-nav {
-    width: 100%;
-    max-width: 430px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-
-  .form-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 13px 24px 22px;
-    border-top: 1px solid var(--line);
-}
 }
