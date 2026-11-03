@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kitchen Kompanion - Shopping List</title>
+  <link rel="stylesheet" href="shopping_list.css">
+</head>
+
+<style>
+    ul li.done {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+    }
+</style>
+
+<body>
+
+  <header>
+    <h1>Kitchen<br>Kompanion</h1>
+    <h2>Shopping List</h2>
+    <p>Click on items to remove them</p>
+  </header>
+
+
+  <main>
+      <ul id="shopping-list">
+      <li class="shopping-item">
+        <!--      <span class="name">Potatoes</span>
+        <span class="qty">1 kg</span>
+        <div class="arrows">
+          <button class="up">↑</button>
+          <button class="down">↓</button>-->
+             
+   
+        </div>
+      </li>
+    </ul>
+
+
+    <script>
+    const shoppingList = document.getElementById("shopping-list");
+    function renderShoppingList(matches) {
+        
+    shoppingList.innerHTML = "";
+    matches.forEach(function (item) {
+    const li = document.createElement("li");
+    li.className = "shopping-item";
+
+    const name = document.createElement("span");
+    name.textContent = item.name;
+
+    const qty = document.createElement("span");
+    qty.className = "qty";
+    qty.textContent = formatQuantity(item);
+
+    const arrows = document.createElement("div");
+    arrows.className = "arrows";
+
+    const up = document.createElement("button");
+    up.type = "button";
+    up.textContent = "▲";
+    up.setAttribute("aria-label", "Increase " + item.name);
+    up.addEventListener("click", function () { changeQuantity(item, 1); });
+
+    const down = document.createElement("button");
+    down.type = "button";
+    down.textContent = "▼";
+    down.setAttribute("aria-label", "Decrease " + item.name);
+    down.addEventListener("click", function () { changeQuantity(item, -1); });
+
+    arrows.appendChild(up);
+    arrows.appendChild(down);
+
+    li.appendChild(name);
+    li.appendChild(qty);
+    li.appendChild(arrows);
+    shoppingList.appendChild(li);
+    });
+    }
+    renderIngredients("");
+    </script>
+
+<a onclick="openPopup()" class="add-item-btn">Add to Shopping List</a>
+
+<!-- Pop-up Functionality Start-->
+<script>
+    function openPopup() {
+        const popup = document.getElementById('shoplistadd');
+        popup.showModal(); 
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('shoplistadd');
+        popup.close(); 
+    }
+</script>
+
+
+
+<script>
+
+function newElement(event) {
+            event.preventDefault(); 
+            
+            var inputValue = document.getElementById("itemname").value;
+            var inputQty = document.getElementById("itemqty").value;
+            
+            var li = document.createElement("LI");
+            li.className = "shopping-item";
+            
+            var nameSpan = document.createElement("span");
+            nameSpan.className = "name";
+            nameSpan.textContent = inputValue;
+            
+            var qtySpan = document.createElement("span");
+            qtySpan.className = "qty";
+            qtySpan.textContent = inputQty;
+
+            li.appendChild(nameSpan);
+            li.appendChild(qtySpan);
+            
+            document.getElementById("shopping-list").appendChild(li);
+            document.getElementById("itemname").value = "";
+            document.getElementById("itemqty").value = "1";
+            
+            closePopup();
+        }
+        </script>
+
+
+</script>
+
+    <dialog id="shoplistadd">
+        <div class="popup-content">
+            <h2>Add to Shopping List</h2>
+            <p>Item Name & Quantity</p>
+            <form id="addItem" onsubmit="newElement(event)">
+                <input id="itemname" type="text" placeholder="Item name" required>
+                <input id="itemqty" class="input" type="number" min="1" value="1" placeholder="Quantity" required>
+                
+                <div class="form-actions">
+                    <button type="button" onclick="closePopup()" class="btn">Cancel</button>
+                    <button type="submit" class="add-item-btn">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+  </main>
+
+
+    <footer class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i data-lucide="house"></i>
+            <span>Kitchen</span>
+        </a>
+
+        <a href="shopping_list.html" class="nav-item active">
+            <i data-lucide="shopping-cart"></i>
+            <span>List</span>
+        </a>
+
+        <a href="recipes.html" class="nav-item">
+            <i data-lucide="chef-hat"></i>
+            <span>Recipes</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <i data-lucide="user-round"></i>
+            <span>Account</span>
+        </a>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script> lucide.createIcons(); </script>
+    <script src="shopping_list.js"></script>
+
+</body>
+</html>
