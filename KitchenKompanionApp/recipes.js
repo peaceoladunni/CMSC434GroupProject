@@ -62,6 +62,7 @@ const recipes = [
     image: "./images/banana.jpg",
     vegetarian: true,
     glutenFree: true,
+    inventoryIngredients: ["strawberries", "banana", "milk"],
     ingredients: [
     "1 cup of strawberries",
     "1 banana",
@@ -75,6 +76,40 @@ const recipes = [
   }
   
 ];
+function getAvailableIngredients() {
+    const available = new Set([
+        "milk", "eggs", "tomatoes", "spinach",
+        "cheddar cheese", "chicken breast", "carrots", "orange juice"
+    ]);
+
+    const addedItems = JSON.parse(
+        localStorage.getItem("kk-items") || "[]"
+    );
+
+    addedItems.forEach(item => {
+        if (Number(item.qty) > 0) {
+            available.add(item.name.trim().toLowerCase());
+        }
+    });
+
+    if (available.has("cheddar cheese") || available.has("shredded cheese")) {
+        available.add("cheese");
+    }
+
+    return available;
+}
+
+function getInventoryRecipes() {
+    const available = getAvailableIngredients();
+
+    return recipes.filter(recipe => {
+        const needed = recipe.inventoryIngredients || [];
+
+        return needed.length > 0 &&
+            needed.every(name => available.has(name));
+    });
+}
+console.log(getInventoryRecipes().map(recipe => recipe.name));
 function openRecipe(recipeId) {
     const recipe = recipes.find(item => item.id === recipeId);
 
@@ -125,8 +160,7 @@ function toggleDietPanel() {
     const panel = document.getElementById("diet-panel");
     const button = document.getElementById("filters-toggle");
 
-    if (panel.hidden) {
-        // Show the currently applied choices.
+    if (panel.hidden) { 
         document.getElementById("vegetarian-filter").checked =
             vegetarianOnly;
 
@@ -174,18 +208,7 @@ function showRecipes(filter = currentFilter) {
      currentFilter = filter;
      document.querySelector(".ingredients-section").hidden =
     filter === "favorites";
-    const ingredientFavorite =
-    document.getElementById("ingredient-favorite");
-
-if (ingredientFavorite) {
-    const selected = favorites.includes(4);
-
-    ingredientFavorite.textContent = selected ? "♥" : "♡";
-    ingredientFavorite.setAttribute(
-        "aria-pressed",
-        String(selected)
-    );
-}
+ 
     document.querySelectorAll(".filters button").forEach(button => {
     const selected =
         button.textContent.trim().toLowerCase() === filter;
@@ -230,7 +253,26 @@ return matchesSearch && matchesFilter && matchesDiet;
         list.appendChild(message);
     }
 
-    filteredRecipes.forEach(recipe => {
+        filteredRecipes.forEach(recipe => {
+        list.appendChild(createRecipeCard(recipe));
+    });
+
+    const inventoryList = document.getElementById("ingredient-recipes");
+    const inventoryRecipes = getInventoryRecipes();
+
+    inventoryList.replaceChildren(
+        ...inventoryRecipes.map(createRecipeCard)
+    );
+
+    if (inventoryRecipes.length === 0) {
+        const message = document.createElement("p");
+        message.textContent =
+            "You don’t have all the ingredients for any recipe yet.";
+        inventoryList.appendChild(message);
+    }
+}
+
+function createRecipeCard(recipe) {
         const card = document.createElement("div");
         card.className = "recipe-card";
 
@@ -294,8 +336,7 @@ imageContainer.appendChild(favoriteButton);
         card.appendChild(imageContainer);
         card.appendChild(info);
 
-        list.appendChild(card);
-    });
+         return card;
 }
 
 document.getElementById("search").addEventListener("input", function () {
